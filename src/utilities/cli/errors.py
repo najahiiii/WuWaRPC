@@ -2,9 +2,9 @@ from rich.console import Console
 from src.utilities.cli import indent, print_divider
 
 
-def fatal_error(
-    console: Console, message: str, exception: Exception | None = None
-) -> None:
+def fatal_error(console: Console,
+                message: str,
+                exception: Exception | None = None) -> None:
     """
     Display a fatal error message and exit the program
 

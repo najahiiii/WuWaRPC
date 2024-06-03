@@ -24,8 +24,7 @@ console = Console()
 
 DEFAULT_WUWA_INSTALL_LOCATION = r"C:\Wuthering Waves"
 DEFAULT_RICH_PRESENCE_INSTALL_LOCATION = (
-    rf"{getenv('LOCALAPPDATA')}\Wuthering Waves RPC"
-)
+    rf"{getenv('LOCALAPPDATA')}\Wuthering Waves RPC")
 LARGE_DIVIDER = r"""
     .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.   
     / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / \ \ / / 
@@ -76,43 +75,50 @@ def get_config(console: Console) -> dict:
     :param console: The console to use for input and output
     """
     return {
-        "wuwa_install_location": get_input(
-            console,
-            "Wuthering Waves Install Location",
-            lambda: get_wuwa_install_location(console, DEFAULT_WUWA_INSTALL_LOCATION),
-        ),
-        "database_access_preference": get_input(
-            console,
-            "Database Access Preference",
-            lambda: get_database_access_preference(console),
-        ),
-        "rich_presence_install_location": get_input(
-            console,
-            "Rich Presence Install Location",
-            lambda: get_rich_presence_install_location(
-                console, DEFAULT_RICH_PRESENCE_INSTALL_LOCATION
+        "wuwa_install_location":
+            get_input(
+                console,
+                "Wuthering Waves Install Location",
+                lambda: get_wuwa_install_location(
+                    console, DEFAULT_WUWA_INSTALL_LOCATION),
             ),
-        ),
-        "startup_preference": get_input(
-            console,
-            "Launch on Startup Preference",
-            lambda: get_startup_preference(console),
-        ),
-        "keep_running_preference": get_input(
-            console,
-            "Keep Running Preference",
-            lambda: get_keep_running_preference(console),
-        ),
-        "shortcut_preference": get_input(
-            console,
-            "Create Shortcut Preference",
-            lambda: get_shortcut_preference(console),
-        ),
-        "promote_preference": get_input(
-            console,
-            "Promote Preference",
-            lambda: get_promote_preference(console),
-        ),
+        "database_access_preference":
+            get_input(
+                console,
+                "Database Access Preference",
+                lambda: get_database_access_preference(console),
+            ),
+        "rich_presence_install_location":
+            get_input(
+                console,
+                "Rich Presence Install Location",
+                lambda: get_rich_presence_install_location(
+                    console, DEFAULT_RICH_PRESENCE_INSTALL_LOCATION),
+            ),
+        "startup_preference":
+            get_input(
+                console,
+                "Launch on Startup Preference",
+                lambda: get_startup_preference(console),
+            ),
+        "keep_running_preference":
+            get_input(
+                console,
+                "Keep Running Preference",
+                lambda: get_keep_running_preference(console),
+            ),
+        "shortcut_preference":
+            get_input(
+                console,
+                "Create Shortcut Preference",
+                lambda: get_shortcut_preference(console),
+            ),
+        "promote_preference":
+            get_input(
+                console,
+                "Promote Preference",
+                lambda: get_promote_preference(console),
+            ),
     }
 
 
@@ -125,15 +131,16 @@ def create_config_folder(console: Console, config: dict) -> None:
     """
     try:
         with console.status(
-            indent("Creating the config folder in the install location..."),
-            spinner="dots",
+                indent("Creating the config folder in the install location..."),
+                spinner="dots",
         ):
-            makedirs(path.join(config["rich_presence_install_location"], "config"))
+            makedirs(
+                path.join(config["rich_presence_install_location"], "config"))
             console.print(indent("Config folder created."), style="green")
     except Exception as e:
         fatal_error(
-            console, indent(f"An error occurred while creating the config folder"), e
-        )
+            console,
+            indent(f"An error occurred while creating the config folder"), e)
 
 
 def write_config_to_file(console: Console, config: dict) -> None:
@@ -145,18 +152,17 @@ def write_config_to_file(console: Console, config: dict) -> None:
     """
     try:
         with open(
-            path.join(
-                config["rich_presence_install_location"], "config", "config.json"
-            ),
-            "w",
+                path.join(config["rich_presence_install_location"], "config",
+                          "config.json"),
+                "w",
         ) as f:
             f.write(dumps(config, indent=4))
 
         console.print(indent("Configuration written to file."), style="green")
     except Exception as e:
         fatal_error(
-            console, indent(f"An error occurred while writing the config to a file"), e
-        )
+            console,
+            indent(f"An error occurred while writing the config to a file"), e)
 
 
 def copy_main_exe_to_install_location(console: Console, config: dict) -> None:
@@ -168,8 +174,9 @@ def copy_main_exe_to_install_location(console: Console, config: dict) -> None:
     """
     try:
         with console.status(
-            indent("Copying the main executable to the install location..."),
-            spinner="dots",
+                indent(
+                    "Copying the main executable to the install location..."),
+                spinner="dots",
         ):
             copyfile(
                 path.join(sys._MEIPASS, Config.MAIN_EXECUTABLE_NAME),
@@ -178,9 +185,8 @@ def copy_main_exe_to_install_location(console: Console, config: dict) -> None:
                     Config.MAIN_EXECUTABLE_NAME,
                 ),
             )
-            console.print(
-                indent("Main executable copied to install location."), style="green"
-            )
+            console.print(indent("Main executable copied to install location."),
+                          style="green")
     except Exception as e:
         fatal_error(
             console,
@@ -191,7 +197,8 @@ def copy_main_exe_to_install_location(console: Console, config: dict) -> None:
         )
 
 
-def copy_uninstall_exe_to_install_location(console: Console, config: dict) -> None:
+def copy_uninstall_exe_to_install_location(console: Console,
+                                           config: dict) -> None:
     """
     Copy the uninstall executable to the install location
 
@@ -200,8 +207,10 @@ def copy_uninstall_exe_to_install_location(console: Console, config: dict) -> No
     """
     try:
         with console.status(
-            indent("Copying the uninstall executable to the install location..."),
-            spinner="dots",
+                indent(
+                    "Copying the uninstall executable to the install location..."
+                ),
+                spinner="dots",
         ):
             copyfile(
                 path.join(sys._MEIPASS, Config.UNINSTALL_EXECUTABLE_NAME),
@@ -233,8 +242,8 @@ def add_exe_to_windows_apps(console: Console, config: dict) -> None:
     """
     try:
         with console.status(
-            indent("Adding the executable to the Windows App list..."), spinner="dots"
-        ):
+                indent("Adding the executable to the Windows App list..."),
+                spinner="dots"):
             programs_folder = path.join(
                 getenv("APPDATA"),
                 "Microsoft/Windows/Start Menu/Programs",
@@ -244,11 +253,11 @@ def add_exe_to_windows_apps(console: Console, config: dict) -> None:
                 makedirs(programs_folder)
 
             main_exe_shortcut_path = path.join(
-                programs_folder, Config.MAIN_EXECUTABLE_NAME.replace(".exe", ".lnk")
-            )
+                programs_folder,
+                Config.MAIN_EXECUTABLE_NAME.replace(".exe", ".lnk"))
             main_exe_shortcut_target = path.join(
-                config["rich_presence_install_location"], Config.MAIN_EXECUTABLE_NAME
-            )
+                config["rich_presence_install_location"],
+                Config.MAIN_EXECUTABLE_NAME)
 
             shell = Dispatch("WScript.Shell")
             shortcut = shell.CreateShortcut(main_exe_shortcut_path)
@@ -268,9 +277,8 @@ def add_exe_to_windows_apps(console: Console, config: dict) -> None:
             shortcut.TargetPath = uninstall_exe_shortcut_target
             shortcut.Save()
 
-            console.print(
-                indent("Executable added to Windows App list."), style="green"
-            )
+            console.print(indent("Executable added to Windows App list."),
+                          style="green")
     except Exception as e:
         console.print(
             indent(
@@ -280,8 +288,7 @@ def add_exe_to_windows_apps(console: Console, config: dict) -> None:
         )
         console.print_exception()
         console.print(
-            indent("The executable will not be added to the Windows App list.")
-        )
+            indent("The executable will not be added to the Windows App list."))
         console.print(indent("Setup will continue..."))
 
 
@@ -294,8 +301,8 @@ def launch_exe_on_startup(console: Console, config: dict) -> None:
     """
     try:
         with console.status(
-            indent("Setting the executable to launch on startup..."), spinner="dots"
-        ):
+                indent("Setting the executable to launch on startup..."),
+                spinner="dots"):
             shortcut_target = path.join(
                 config["rich_presence_install_location"],
                 Config.MAIN_EXECUTABLE_NAME,
@@ -316,8 +323,11 @@ def launch_exe_on_startup(console: Console, config: dict) -> None:
                 "/f",
             ]
 
-            subprocess.run(create_task_command, check=True, stdout=subprocess.DEVNULL)
-            console.print(indent("Executable set to launch on startup."), style="green")
+            subprocess.run(create_task_command,
+                           check=True,
+                           stdout=subprocess.DEVNULL)
+            console.print(indent("Executable set to launch on startup."),
+                          style="green")
     except Exception as e:
         console.print(
             indent(
@@ -327,8 +337,8 @@ def launch_exe_on_startup(console: Console, config: dict) -> None:
         )
         console.print_exception()
         console.print(
-            indent("The executable will not launch on startup. Setup"), style="red"
-        )
+            indent("The executable will not launch on startup. Setup"),
+            style="red")
         console.print(indent("Setup will continue..."))
 
 
@@ -340,14 +350,15 @@ def create_windows_shortcut(console: Console, config: dict) -> None:
     :param config: The configuration options
     """
     try:
-        with console.status(indent("Creating a desktop shortcut..."), spinner="dots"):
+        with console.status(indent("Creating a desktop shortcut..."),
+                            spinner="dots"):
             shortcut_path = path.join(
                 path.expanduser("~/Desktop"),
                 Config.MAIN_EXECUTABLE_NAME.replace(".exe", ".lnk"),
             )
             shortcut_target = path.join(
-                config["rich_presence_install_location"], Config.MAIN_EXECUTABLE_NAME
-            )
+                config["rich_presence_install_location"],
+                Config.MAIN_EXECUTABLE_NAME)
             shell = Dispatch("WScript.Shell")
             shortcut = shell.CreateShortcut(shortcut_path)
             shortcut.TargetPath = shortcut_target
@@ -359,7 +370,8 @@ def create_windows_shortcut(console: Console, config: dict) -> None:
             style="red",
         )
         console.print_exception()
-        console.print(indent("The desktop shortcut will not be created."), style="red")
+        console.print(indent("The desktop shortcut will not be created."),
+                      style="red")
         console.print(indent("Setup will continue..."))
 
 

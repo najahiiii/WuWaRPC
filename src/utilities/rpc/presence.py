@@ -38,10 +38,13 @@ class Presence:
 
         # If the user wants to access the database, get the database connection
         if self.config["database_access_preference"]:
-            local_storage = self.get_lastest_database_file(self.database_directory)
-            self.logger.info(f"Found last modified LocalStorage file: {local_storage}")
+            local_storage = self.get_lastest_database_file(
+                self.database_directory)
+            self.logger.info(
+                f"Found last modified LocalStorage file: {local_storage}")
             if local_storage:
-                database_path = os.path.join(self.database_directory, local_storage)
+                database_path = os.path.join(self.database_directory,
+                                             local_storage)
                 self.local_database = get_database(database_path)
             else:
                 self.local_database = None
@@ -62,7 +65,8 @@ class Presence:
         highest_union_level = -1
         latest_file = None
 
-        self.logger.info(f"Looking for the lastest LocalStorage file in {directory}")
+        self.logger.info(
+            f"Looking for the lastest LocalStorage file in {directory}")
         for file in os.listdir(directory):
             if latest_file is None:
                 latest_file = file
@@ -105,7 +109,8 @@ class Presence:
                 self.logger.info("Wuthering Waves is not running, waiting...")
                 sleep(15)
 
-            self.logger.info("Wuthering Waves and Discord are running, starting RPC...")
+            self.logger.info(
+                "Wuthering Waves and Discord are running, starting RPC...")
             self.start_time = time()
             self.presence.update(start=self.start_time)
             self.rpc_loop()
@@ -140,16 +145,10 @@ class Presence:
         self.logger.info("Updating RPC presence...")
 
         # Add a button to the RPC to promote the Rich Presence if the user wants to
-        buttons = (
-            [
-                {
-                    "label": "Want a status like this?",
-                    "url": "https://github.com/xAkre/Wuthering-Waves-RPC",
-                }
-            ]
-            if self.config["promote_preference"]
-            else None
-        )
+        buttons = ([{
+            "label": "Want a status like this?",
+            "url": "https://github.com/xAkre/Wuthering-Waves-RPC",
+        }] if self.config["promote_preference"] else None)
 
         # Update the RPC with only basic information if the user doesn't want to access the database
         if self.local_database is None:
@@ -164,11 +163,14 @@ class Presence:
 
         try:
             # Check for the lastest database file
-            local_storage = self.get_lastest_database_file(self.database_directory)
-            self.logger.info(f"Found last modified LocalStorage file: {local_storage}")
+            local_storage = self.get_lastest_database_file(
+                self.database_directory)
+            self.logger.info(
+                f"Found last modified LocalStorage file: {local_storage}")
 
             if local_storage:
-                database_path = os.path.join(self.database_directory, local_storage)
+                database_path = os.path.join(self.database_directory,
+                                             local_storage)
                 try:
                     self.local_database = get_database(database_path)
                 except self.local_database.Error as e:

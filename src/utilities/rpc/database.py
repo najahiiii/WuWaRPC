@@ -12,7 +12,8 @@ def get_database(path: str) -> Connection:
     try:
         return connect(path)
     except Exception as e:
-        logger.error(f"An error occurred while connecting to the local database: {e}")
+        logger.error(
+            f"An error occurred while connecting to the local database: {e}")
 
 
 def get_player_region(connection: Connection) -> str:
@@ -26,9 +27,8 @@ def get_player_region(connection: Connection) -> str:
 
     try:
         cursor = connection.cursor()
-        result = cursor.execute(
-            "SELECT * FROM LocalStorage WHERE key = ?", ("SdkLevelData",)
-        ).fetchone()
+        result = cursor.execute("SELECT * FROM LocalStorage WHERE key = ?",
+                                ("SdkLevelData",)).fetchone()
         value = loads(result[1])
         content = value.get("Content")
         region = content[len(content) - 1][1][0].get("Region")
@@ -49,9 +49,11 @@ def get_player_union_level(connection: Connection) -> str:
 
     try:
         sdk_game_data = _get_sdk_level_data(connection)
-        return sdk_game_data.get("Level") if sdk_game_data.get("Level") else "Unknown"
+        return sdk_game_data.get("Level") if sdk_game_data.get(
+            "Level") else "Unknown"
     except Exception as e:
-        logger.error(f"An error occurred while fetching the user's union level: {e}")
+        logger.error(
+            f"An error occurred while fetching the user's union level: {e}")
         return "Unknown"
 
 
@@ -66,9 +68,8 @@ def get_game_version(connection: Connection) -> str:
 
     try:
         cursor = connection.cursor()
-        result = cursor.execute(
-            "SELECT * FROM LocalStorage WHERE key = ?", ("PatchVersion",)
-        ).fetchone()
+        result = cursor.execute("SELECT * FROM LocalStorage WHERE key = ?",
+                                ("PatchVersion",)).fetchone()
         version = result[1]
         return version if version else "Unknown"
     except Exception as e:
@@ -117,13 +118,13 @@ def _get_sdk_level_data(connection: Connection) -> dict:
 
     try:
         cursor = connection.cursor()
-        result = cursor.execute(
-            "SELECT * FROM LocalStorage WHERE key = ?", ("SdkLevelData",)
-        ).fetchone()
+        result = cursor.execute("SELECT * FROM LocalStorage WHERE key = ?",
+                                ("SdkLevelData",)).fetchone()
         value = loads(result[1])
         content = value.get("Content")
         data = content[len(content) - 1][1][0]
         return data
     except Exception as e:
-        logger.error(f"An error occurred while fetching the user's level data: {e}")
+        logger.error(
+            f"An error occurred while fetching the user's level data: {e}")
         return None

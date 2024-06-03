@@ -39,8 +39,7 @@ def get_wuwa_install_location(console: Console, default_location: str) -> str:
             indent(
                 f"Where is Wuthering Waves installed?",
                 f'Leave blank for the default location ("{default_location}"): ',
-            )
-        ).strip()
+            )).strip()
 
         if wuwa_install_location == "":
             return default_location
@@ -58,9 +57,7 @@ def get_wuwa_install_location(console: Console, default_location: str) -> str:
             return wuwa_install_location
 
         console.print(
-            indent(
-                "That path does not exist. Please enter a valid path.",
-            ),
+            indent("That path does not exist. Please enter a valid path.",),
             style="red",
         )
 
@@ -82,7 +79,8 @@ def get_database_access_preference(console: Console) -> bool:
     )
 
 
-def get_rich_presence_install_location(console: Console, default_location: str) -> str:
+def get_rich_presence_install_location(console: Console,
+                                       default_location: str) -> str:
     """
     Get the rich presence install location from the user
 
@@ -95,8 +93,7 @@ def get_rich_presence_install_location(console: Console, default_location: str) 
             indent(
                 "Where would you like the rich presence to be installed?",
                 f'Leave blank for the default location ("{default_location}"): ',
-            )
-        ).strip()
+            )).strip()
 
         if rich_presence_install_location == "":
             rich_presence_install_location = default_location
@@ -105,8 +102,7 @@ def get_rich_presence_install_location(console: Console, default_location: str) 
             if not path.isdir(rich_presence_install_location):
                 console.print(
                     indent(
-                        "That path is a file. Please enter a valid folder.",
-                    ),
+                        "That path is a file. Please enter a valid folder.",),
                     style="red",
                 )
                 continue
@@ -115,15 +111,14 @@ def get_rich_presence_install_location(console: Console, default_location: str) 
                 return rich_presence_install_location
 
             if get_boolean_input(
-                console,
-                indent(
-                    "That folder is not empty. Would you like to clear it? (Y/N): ",
-                ),
+                    console,
+                    indent(
+                        "That folder is not empty. Would you like to clear it? (Y/N): ",
+                    ),
             ):
                 try:
-                    with console.status(
-                        indent("Clearing the folder..."), spinner="dots"
-                    ):
+                    with console.status(indent("Clearing the folder..."),
+                                        spinner="dots"):
                         rmtree(rich_presence_install_location)
                         makedirs(rich_presence_install_location)
                         console.print(indent("Folder cleared."), style="green")
@@ -133,13 +128,13 @@ def get_rich_presence_install_location(console: Console, default_location: str) 
                     fatal_error(
                         console,
                         indent(
-                            f"An error occurred while clearing the folder:",
-                        ),
+                            f"An error occurred while clearing the folder:",),
                         e,
                     )
         else:
             if rich_presence_install_location == default_location:
-                with console.status(indent("Creating the folder..."), spinner="dots"):
+                with console.status(indent("Creating the folder..."),
+                                    spinner="dots"):
                     makedirs(rich_presence_install_location)
                     console.print(indent("Folder created."), style="green")
 
@@ -147,17 +142,17 @@ def get_rich_presence_install_location(console: Console, default_location: str) 
 
             while True:
                 if get_boolean_input(
-                    console,
-                    indent(
-                        "That folder does not exist. Would you like to create it? (Y/N): ",
-                    ),
+                        console,
+                        indent(
+                            "That folder does not exist. Would you like to create it? (Y/N): ",
+                        ),
                 ):
                     try:
-                        with console.status(
-                            indent("Creating the folder..."), spinner="dots"
-                        ):
+                        with console.status(indent("Creating the folder..."),
+                                            spinner="dots"):
                             makedirs(rich_presence_install_location)
-                            console.print(indent("Folder created."), style="green")
+                            console.print(indent("Folder created."),
+                                          style="green")
 
                         return rich_presence_install_location
                     except Exception as e:

@@ -12,8 +12,8 @@ class Logger:
     log_file_path: str
 
     def __init__(
-        self,
-        log_folder: str = join(abspath(dirname(sys.executable)), "logs"),
+            self,
+            log_folder: str = join(abspath(dirname(sys.executable)), "logs"),
     ):
         """
         Create a new logger instance
